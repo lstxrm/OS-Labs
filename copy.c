@@ -1,0 +1,13 @@
+#include <unistd.h>
+#include <stdio.h>
+
+int main(){
+    char buf[64];
+    
+    while(1){
+        int n = read(0, buf, sizeof(int));
+        if(n <= 0) break;
+        write(1, buf, n);
+    }
+    exit(0); 
+}
