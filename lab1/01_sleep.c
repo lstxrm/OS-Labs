@@ -6,7 +6,7 @@
 
 int main(int argc, char* argv[]){
     if(argc < 2){
-        fprintf(stderr, "ERROR: input required");
+        fprintf(stderr, "Error occured\n");
         exit(1);
     }
     sleep(atoi(argv[1]));

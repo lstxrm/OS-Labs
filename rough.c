@@ -1,16 +1,21 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <string.h>
 
 int main(int argc, char* argv[]){
-    for(int i = 1; i < argc; i++){
-        write(1, argv[i], strlen(argv[i]));
-        if(i+1 < argc){
-            write(1, " ", 1);
-        }
-        else{
-            write(1, "\n", 1);
-        }
+    int pid, status;
+    pid = fork();
+    if(pid == 0){
+        char* argv[] = {"echo", "hello", "this", "is", "ECHO", 0};
+        execvp("echo", argv);
+        printf("exec failed\n");
+        exit(1);
     }
-    return 0;
+    else{
+        printf("Parent waiting\n");
+        wait(&status);
+        printf("The child exited with status %d\n", status);
+    }
+    exit(0);
 }
