@@ -1,4 +1,4 @@
-#include "kernel/stat.h"
+#include "stat.h"
 #include "types.h"
 #include "stat.h"
 #include "user.h"
@@ -24,7 +24,6 @@ void find(char* path, char* target){
         if(strcmp(name, target) == 0){
             printf("%s\n", path);
         }
-
         break;
     }
     case T_DIR:{
@@ -33,8 +32,11 @@ void find(char* path, char* target){
             if(strcmp(de.name, ".") == 0 || strcmp(de.name, "..") == 0) continue;
             char buf[512];
             strcpy(buf, path);
-            strcat(buf, "/");
-            strcat(buf, de.name);
+            char *p = buf + strlen(buf);
+            *p++ = '/';
+
+            memmove(p, de.name, DIRSIZ);
+            p[DIRSIZ] = '\0';
             
             find(buf, target);
             break;
